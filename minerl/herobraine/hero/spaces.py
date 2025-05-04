@@ -152,12 +152,12 @@ class Box(gym.spaces.Box, MineRLSpace):
 
     def sample(self, bs=None):
         """
-        Generates a single random sample inside of the Box. 
+        Generates a single random sample inside of the Box.
 
         In creating a sample of the box, each coordinate is sampled according to
         the form of the interval:
-        
-        * [a, b] : uniform distribution 
+
+        * [a, b] : uniform distribution
         * [a, oo) : shifted exponential distribution
         * (-oo, b] : shifted negative exponential distribution
         * (-oo, oo) : normal distribution
@@ -319,7 +319,7 @@ class Dict(gym.spaces.Dict, MineRLSpace):
 
     def create_unflattened_space(self):
         # TODO Fix this really ugly hack for flattening.
-        # Needs to be a generic design that's simple that 
+        # Needs to be a generic design that's simple that
         # encapsulates unflattenable or not;
         # First calss support for unflattenable spaces..
         return Dict({
@@ -476,7 +476,7 @@ class Text(MineRLSpace):
     MAX_STR_LEN = 100
 
     def __init__(self, shape):
-        super().__init__(shape, np.unicode_)
+        super().__init__(shape, np.str_)
 
     def sample(self):
         total_strings = np.prod(self.shape)
@@ -488,8 +488,7 @@ class Text(MineRLSpace):
 
     def contains(self, x):
         contained = False  # ? TODO (R): Look back in git.
-        contained = contained or isinstance(x, np.ndarray) and x.shape == self.shape and x.dtype.type in [np.string_,
-                                                                                                          np.unicode]
+        contained = contained or isinstance(x, np.ndarray) and x.shape == self.shape and x.dtype.type in [np.string_]
         contained = contained or self.shape in [None, 1] and isinstance(x, str)
         return contained
 
@@ -511,7 +510,7 @@ class Text(MineRLSpace):
 class DiscreteRange(Discrete):
     """
     {begin, begin+1, ..., end-2, end - 1}
-    
+
     Like discrete, but takes a range of dudes
     DiscreteRange(0, n) is equivalent to Discrete(n)
 
